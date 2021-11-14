@@ -11,7 +11,7 @@ export class TypeAbonnementsService {
     @InjectModel(TypeAbonnement)
     private typeabonnementModel: typeof TypeAbonnement,
   ) {}
-s
+  
   create(createTypeAbonnementDto: CreateTypeAbonnementDto) {
     return 'This action adds a new typeAbonnement';
   }

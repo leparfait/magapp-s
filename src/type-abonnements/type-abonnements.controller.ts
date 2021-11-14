@@ -5,6 +5,7 @@ import { UpdateTypeAbonnementDto } from './dto/update-type-abonnement.dto';
 
 @Controller('type-abonnements')
 export class TypeAbonnementsController {
+  
   constructor(private readonly typeAbonnementsService: TypeAbonnementsService) {}
 
   @Post()

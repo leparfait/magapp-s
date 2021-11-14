@@ -1,5 +1,4 @@
-
-import { Table, Column, Model, ForeignKey, BelongsTo} from 'sequelize-typescript';
+import { Table, Column, Model, ForeignKey, CreatedAt} from 'sequelize-typescript';
 import { TypeAbonnement } from '../../type-abonnements/entities/type-abonnement.entity';
 import { User } from '../../users/entities/user.entity';
 
@@ -14,17 +13,17 @@ export class Abonnement extends Model {
   @Column
   idType: number;
 
+  @CreatedAt
   @Column 
   start : Date;
-
+ 
   @Column
   end : Date;
 
-  @BelongsTo(() => User)
-  user?: User;
+  // @BelongsTo(() => User)
+  // user?: User;
 
-  @BelongsTo(() => TypeAbonnement)
-  typeAbonnement ?: TypeAbonnement;
+  // @BelongsTo(() => TypeAbonnement)
+  // typeAbonnement ?: TypeAbonnement;
 
 }
-
