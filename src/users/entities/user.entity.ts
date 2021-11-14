@@ -1,4 +1,5 @@
-import { Table, Column, Model } from 'sequelize-typescript';
+import { Table, Column, Model, BelongsTo } from 'sequelize-typescript';
+import { Abonnement } from '../../abonnements/entities/abonnement.entity';
 
 @Table
 export class User extends Model {
@@ -12,7 +13,7 @@ export class User extends Model {
   @Column
   name: string;
 
-
   @Column
   role: string;
+
 }

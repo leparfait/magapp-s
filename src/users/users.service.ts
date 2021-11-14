@@ -1,4 +1,5 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/sequelize';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
@@ -7,20 +8,20 @@ import { User } from './entities/user.entity';
 export class UsersService {
 
   constructor(
-    @Inject('USERS_REPOSITORY')
-    private usersRepository: typeof User
+    @InjectModel(User)
+    private userModel: typeof User,
   ) {}
 
   create(createUserDto: CreateUserDto) {
-    return this.usersRepository.create<User>(createUserDto) ;
+    return this.userModel.create<User>(createUserDto) ;
   }
 
-  async findAll(): Promise<any> {
-    return 'all user here'; //this.usersRepository.findAll<User>();
+  async findAll(): Promise<User[]> {
+    return  this.userModel.findAll();
   }
 
   findOne(id: number) { 
-    return this.usersRepository.findByPk<User>(id);
+    return this.userModel.findByPk(id);
      //`This action returns a #${id} user`;
   }
 
@@ -30,7 +31,9 @@ export class UsersService {
     
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(id: number) {
+    // return `This action removes a #${id} user`;
+    const user = await this.findOne(id);
+    await user.destroy();
   }
 }

@@ -1,9 +1,17 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/sequelize';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
+import { Category } from './entities/category.entity';
 
 @Injectable()
 export class CategoriesService {
+
+  constructor(
+    @InjectModel(Category)
+    private categoryModel: typeof Category,
+  ) {}
+  
   create(createCategoryDto: CreateCategoryDto) {
     return 'This action adds a new category';
   }

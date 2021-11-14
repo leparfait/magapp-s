@@ -1,9 +1,17 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/sequelize';
 import { CreateMagazineDto } from './dto/create-magazine.dto';
 import { UpdateMagazineDto } from './dto/update-magazine.dto';
+import { Magazine } from './entities/magazine.entity';
 
 @Injectable()
 export class MagazinesService {
+
+  constructor(
+    @InjectModel(Magazine)
+    private magazineModel: typeof Magazine,
+  ) {}
+
   create(createMagazineDto: CreateMagazineDto) {
     return 'This action adds a new magazine';
   }
