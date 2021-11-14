@@ -1,4 +1,4 @@
-import { Table, Column, Model, BelongsToMany, HasMany } from 'sequelize-typescript';
+import { Table, Column, Model, BelongsToMany, HasMany, IsEmail, Unique, DataType } from 'sequelize-typescript';
 import { MagazinePayer } from '../../magazine-payers/entities/magazine-payer.entity';
 import { Abonnement } from '../../abonnements/entities/abonnement.entity';
 import { Magazine } from '../../magazines/entities/magazine.entity';
@@ -8,6 +8,15 @@ import { Transaction } from '../../transactions/entities/transaction.entity';
 @Table
 export class User extends Model {
 
+  @Column({
+    type: DataType.UUID,
+    defaultValue: DataType.UUIDV4,
+    primaryKey: true,
+  })
+  id: string;
+
+  @IsEmail
+  @Unique
   @Column
   email: string;
 

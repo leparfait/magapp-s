@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
@@ -13,22 +13,41 @@ export class CategoriesService {
   ) {}
   
   create(createCategoryDto: CreateCategoryDto) {
-    return 'This action adds a new category';
+    return this.categoryModel.create(createCategoryDto) ;
   }
 
-  findAll() {
-    return `This action returns all categories`;
+  async findAll(): Promise<Category[]> {
+    return await this.categoryModel.findAll();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} category`;
+    const user = this.categoryModel.findByPk(id)
+    if(!user){
+      throw new HttpException(
+            'category id not found',
+            HttpStatus.NOT_FOUND
+      )
+    }
+    return user;
+    // return `This action returns a #${id} category`;
   }
 
-  update(id: number, updateCategoryDto: UpdateCategoryDto) {
-    return `This action updates a #${id} category`;
+  async update(id: number, updateCategoryDto: UpdateCategoryDto) {
+    const category = await this.categoryModel.findByPk(id)
+    if(!category){
+      throw new HttpException(
+        'category id not found',
+        HttpStatus.NOT_FOUND
+     )
+    }
+    return await category.update(id,updateCategoryDto)
+    // return `This action updates a #${id} category`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} category`;
+  async remove(id: number) {
+    const category = await this.categoryModel.findByPk(id)
+          await category.destroy();
+          return category;
+    // return `This action removes a #${id} category`;
   }
 }
