@@ -5,10 +5,11 @@ import { UsersController } from './users.controller';
 // import { usersProviders } from './entities/user.providers';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { User } from './entities/user.entity';
+import { GoogleStrategy } from './google.strategy';
 
 @Module({
   imports: [SequelizeModule.forFeature([User])],
   controllers: [UsersController],
-  providers: [UsersService]
+  providers: [UsersService,GoogleStrategy]
 })
 export class UsersModule {}

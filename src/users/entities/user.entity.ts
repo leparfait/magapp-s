@@ -27,6 +27,9 @@ export class User extends Model {
   name: string;
 
   @Column
+  photo: string;
+
+  @Column
   role: string;
 
   @BelongsToMany(() => Magazine, () => MagazinePayer)

@@ -13,6 +13,34 @@ export class UsersService {
     private userModel: typeof User,
   ) {}
 
+  googleLogin(req){
+    if (!req.user) {
+      return 'No user from google'
+    }
+    const alreadyUser  = this.userModel.findOne<User>({
+      where: { email : req.user.email },
+    });
+    if(!alreadyUser){
+        const userGoogle  = new User()
+        userGoogle.email = req.user.email
+        userGoogle.name = req.user.firstName+" "+req.user.lastName
+        userGoogle.password = req.user.email+"123"
+        userGoogle.photo = req.user.picture
+        userGoogle.role = 'user'
+        const data = userGoogle.save()
+        return data
+    }else{
+      throw new HttpException(
+        'User already exist',
+         HttpStatus.OK,
+      );
+    }
+    // return {
+    //   message: 'User Info from Google',
+    //   user: req.user
+    // }
+  }
+
   create(createUserDto: CreateUserDto) {
     // return this.userModel.create<User>(createUserDto) ;
       try {
